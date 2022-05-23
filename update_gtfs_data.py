@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import csv, requests, zipfile
 from io import BytesIO
 from models import *
