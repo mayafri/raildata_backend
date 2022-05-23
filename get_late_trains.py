@@ -12,6 +12,9 @@ def get_minutes_late(datetime_scheduled, datetime_real):
 db.connect()
 db.create_tables([Time])
 
+# Suppression des données de la journée en cours (car elles seront mises à jour)
+Time.delete().where(Time.record_date == date.today()).execute()
+
 r = requests.get('https://tsimobile.viarail.ca/data/allData.json')
 if r.status_code == 200:
     for i in r.json().items():
