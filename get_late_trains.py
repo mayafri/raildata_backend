@@ -10,7 +10,7 @@ def get_minutes_late(datetime_scheduled, datetime_real):
     return minutes_late if minutes_late > 0 else 0
 
 db.connect()
-db.create_tables([TrainStopRecord])
+db.create_tables([Time])
 
 r = requests.get('https://tsimobile.viarail.ca/data/allData.json')
 if r.status_code == 200:
@@ -23,7 +23,7 @@ if r.status_code == 200:
                 time_real = str_to_datetime(stop['estimated'])
                 time_scheduled = str_to_datetime(stop['scheduled'])
                 minutes_late = get_minutes_late(time_scheduled, time_real)
-                TrainStopRecord.create(
+                Time.create(
                     train=train_number,
                     stop=Stop.get(code=stop['code']),
                     minutes_late=minutes_late,

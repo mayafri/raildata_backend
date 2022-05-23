@@ -25,7 +25,7 @@ class Trip(BaseModel):
     route = ForeignKeyField(Route)
     train = IntegerField()
     
-class TrainStopRecord(BaseModel):
+class Time(BaseModel):
     train = IntegerField()
     record_date = DateField(default=date.today())
     stop = ForeignKeyField(Stop)
