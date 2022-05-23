@@ -11,6 +11,6 @@ Informations officielles ici : https://www.viarail.ca/fr/ressources-developpeurs
 
 ## get_late_trains.py
 
-Récupère les temps des trains de la journée depuis l'API destinée aux informations voyageur en temps réel et les ajoute au fichier de base de données. **À planifier une fois par jour juste avant minuit.**
+Récupère les temps des trains de la journée depuis l'API destinée aux informations voyageur en temps réel et les ajoute au fichier de base de données. Les trains arrivés peuvent être retirés de l'API au bout de quelques heures, il vaut mieux exécuter ce script une fois par heure pour être tranquille.
 
 Source des données ici : https://tsimobile.viarail.ca/index-fr.html

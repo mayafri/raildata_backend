@@ -12,9 +12,6 @@ def get_minutes_late(datetime_scheduled, datetime_real):
 db.connect()
 db.create_tables([Time])
 
-# Suppression des données de la journée en cours (car elles seront mises à jour)
-Time.delete().where(Time.record_date == date.today()).execute()
-
 r = requests.get('https://tsimobile.viarail.ca/data/allData.json')
 if r.status_code == 200:
     for i in r.json().items():
@@ -26,8 +23,9 @@ if r.status_code == 200:
                 time_real = str_to_datetime(stop['estimated'])
                 time_scheduled = str_to_datetime(stop['scheduled'])
                 minutes_late = get_minutes_late(time_scheduled, time_real)
-                Time.create(
+                Time.get_or_create( # Crée l'entrée si elle n'existe pas, ça évite les doublons
                     train=train_number,
+                    record_date=date.today(),
                     stop=Stop.get(code=stop['code']),
                     minutes_late=minutes_late,
                     scheduled_time_utc=time_scheduled
