@@ -42,15 +42,15 @@ async def trains_stop_by_id(stop_id: int):
     return {"stops": stop.__data__}
 
 @app.get("/times/{train}")
-async def times_by_train(train: int, date_from: str, date_to: str):
+async def times_by_train(train: int, departure_time_from: str, departure_time_to: str):
     times_list = []
     for time in Time.select().where(
-        (Time.record_date >= date_from) & 
-        (Time.record_date <= date_to) & 
+        (Time.train_departure_time_utc >= departure_time_from) & 
+        (Time.train_departure_time_utc <= departure_time_to) & 
         (Time.train == train)):
         times_list.append({
             'train': time.train,
-            'record_date': time.record_date,
+            'train_departure_time_utc': time.train_departure_time_utc,
             'stop': time.stop.__data__,
             'minutes_late': time.minutes_late,
             'scheduled_time_utc': time.scheduled_time_utc,

@@ -27,7 +27,7 @@ class Trip(BaseModel):
     
 class Time(BaseModel):
     train = IntegerField()
-    record_date = DateField(default=date.today())
+    train_departure_time_utc = DateTimeField()
     stop = ForeignKeyField(Stop)
     minutes_late = IntegerField()
     scheduled_time_utc = DateTimeField()
