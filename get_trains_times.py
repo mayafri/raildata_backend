@@ -20,7 +20,7 @@ if r.status_code == 200:
         train_data = i[1]
         if train_data['arrived']:
             train_dict = {}
-            train_departure_time = str_to_datetime(train_data['times'][0]['scheduled']),
+            train_departure_time = str_to_datetime(train_data['times'][0]['scheduled'])
             for stop in train_data['times']:
                 real_time = str_to_datetime(stop['estimated'])
                 scheduled_time = str_to_datetime(stop['scheduled'])
