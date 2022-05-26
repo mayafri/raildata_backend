@@ -43,22 +43,24 @@ async def trains_stop_by_id(stop_id: int):
 
 @app.get("/times/{trains}")
 async def times_by_train(trains: str, departure_time_from: str, departure_time_to: str):
-    times_list = []
-    for train in trains.split(','): # On peut donner un n° train ou plusieurs séparés par virgules
+    # On peut donner un n° train ou plusieurs séparés par virgules
+    trains_list = trains.split(',')
+    for train in trains_list: 
         try:
             train = int(train)
         except ValueError:
             raise HTTPException(status_code=422,
                                 detail="`trains` must be integer or integers separated by commas.")
-        for time in Time.select().where(
-            (Time.train_departure_time_utc >= departure_time_from) & 
-            (Time.train_departure_time_utc <= departure_time_to) & 
-            (Time.train == train)):
-            times_list.append({
-                'train': time.train,
-                'train_departure_time_utc': time.train_departure_time_utc,
-                'stop': time.stop.__data__,
-                'minutes_late': time.minutes_late,
-                'scheduled_time_utc': time.scheduled_time_utc,
-            })
+    times_list = []
+    for time in Time.select().where(
+        (Time.train_departure_time_utc >= departure_time_from) & 
+        (Time.train_departure_time_utc <= departure_time_to) & 
+        (Time.train.in_(trains_list))):
+        times_list.append({
+            'train': time.train,
+            'train_departure_time_utc': time.train_departure_time_utc,
+            'stop': time.stop.__data__,
+            'minutes_late': time.minutes_late,
+            'scheduled_time_utc': time.scheduled_time_utc,
+        })
     return {"times": times_list}
