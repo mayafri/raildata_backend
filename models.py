@@ -23,10 +23,10 @@ class Route(BaseModel):
 class Trip(BaseModel):
     id = IntegerField(primary_key=True)
     route = ForeignKeyField(Route)
-    train = IntegerField()
+    train = CharField()
     
 class Time(BaseModel):
-    train = IntegerField()
+    train = CharField()
     train_departure_time_utc = DateTimeField()
     stop = ForeignKeyField(Stop)
     minutes_late = IntegerField()

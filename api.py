@@ -45,12 +45,6 @@ async def trains_stop_by_id(stop_id: int):
 async def times_by_train(trains: str, departure_time_from: str, departure_time_to: str):
     # On peut donner un n° train ou plusieurs séparés par virgules
     trains_list = trains.split(',')
-    for train in trains_list: 
-        try:
-            train = int(train)
-        except ValueError:
-            raise HTTPException(status_code=422,
-                                detail="`trains` must be integer or integers separated by commas.")
     times_list = []
     for time in Time.select().where(
         (Time.train_departure_time_utc >= departure_time_from) & 
