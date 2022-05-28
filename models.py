@@ -1,5 +1,4 @@
 from peewee import *
-from datetime import date
 
 db = SqliteDatabase('viarail.sqlite')
 
@@ -11,8 +10,8 @@ class Stop(BaseModel):
     id = IntegerField(primary_key=True)
     code = CharField(unique=True)
     name = CharField()
-    lon = CharField()
     lat = CharField()
+    lon = CharField()
     timezone = CharField()
 
 class Route(BaseModel):
@@ -31,3 +30,15 @@ class Time(BaseModel):
     stop = ForeignKeyField(Stop)
     minutes_late = IntegerField()
     scheduled_time_utc = DateTimeField()
+
+class Shape(BaseModel):
+    trip = ForeignKeyField(Trip)
+    lat = CharField()
+    lon = CharField()
+
+class Schedule(BaseModel):
+    trip = ForeignKeyField(Trip)
+    arrival_time = TimeField()
+    departure_time = TimeField()
+    stop = ForeignKeyField(Stop)
+    sequence = IntegerField()

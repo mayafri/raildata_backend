@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import csv, requests, zipfile
+import sched
 from io import BytesIO
 from models import *
 
@@ -14,8 +15,8 @@ db = SqliteDatabase('viarail.sqlite')
 print('Drop old data')
 
 db.connect()
-db.drop_tables([Stop, Route, Trip])
-db.create_tables([Stop, Route, Trip])
+db.drop_tables([Stop, Route, Trip, Shape, Schedule])
+db.create_tables([Stop, Route, Trip, Shape, Schedule])
 
 # Stations
 
@@ -60,4 +61,36 @@ with open('gtfs/trips.txt') as trips_file:
         train = trip[4]
         Trip.create(route=route, id=id, train=train)
 
+# Shapes (tracés) (avec Via Rail "shape_id" == "trip_id")
+
+print('Insert shapes')
+
+with open('gtfs/shapes.txt') as shapes_file:
+    csv_reader = csv.reader(shapes_file, delimiter=',')
+    next(csv_reader)
+    for shape in csv_reader:
+        trip = shape[0]
+        lat = shape[1]
+        lon = shape[2]
+        Shape.create(trip=trip, lat=lat, lon=lon)
+
+# Schedules (horaires théoriques)
+
+print('Insert schedules')
+
+with open('gtfs/stop_times.txt') as schedules_file:
+    csv_reader = csv.reader(schedules_file, delimiter=',')
+    next(csv_reader)
+    for schedule in csv_reader:
+        trip = schedule[0]
+        arrival_time = schedule[1]
+        departure_time = schedule[2]
+        stop = schedule[3]
+        sequence = schedule[4]
+        Schedule.create(trip=trip,
+                        arrival_time=arrival_time,
+                        departure_time=departure_time,
+                        stop=stop,
+                        sequence=sequence)
+        
 print('Done')
