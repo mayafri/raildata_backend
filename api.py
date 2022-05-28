@@ -44,12 +44,11 @@ async def trains_stop_by_id(stop_id: int):
 @app.get("/times/{trains}")
 async def times_by_train(trains: str, departure_time_from: str, departure_time_to: str):
     # On peut donner un n° train ou plusieurs séparés par virgules
-    trains_list = trains.split(',')
     times_list = []
     for time in Time.select().where(
         (Time.train_departure_time_utc >= departure_time_from) & 
         (Time.train_departure_time_utc <= departure_time_to) & 
-        (Time.train.in_(trains_list))):
+        (Time.train.in_(trains.split(',')))):
         times_list.append({
             'train': time.train,
             'train_departure_time_utc': time.train_departure_time_utc,
@@ -58,3 +57,25 @@ async def times_by_train(trains: str, departure_time_from: str, departure_time_t
             'scheduled_time_utc': time.scheduled_time_utc,
         })
     return {"times": times_list}
+
+async def get_trips_for_train(trains_list):
+    trips_ids_list = []
+    for trip in Trip.select().where(Trip.train.in_(trains_list)):
+        trips_ids_list.append(trip.id)
+    return trips_ids_list
+
+@app.get("/shapes/{trains}")
+async def shapes_by_train(trains: str):
+    trips = await get_trips_for_train(trains.split(','))
+    shapes_list = []
+    for shape in Shape.select().where(Shape.trip.in_(trips)):
+        shapes_list.append(shape.__data__)
+    return {"shapes": shapes_list}
+
+@app.get("/schedules/{trains}")
+async def schedules_by_train(trains: str):
+    trips = await get_trips_for_train(trains.split(','))
+    schedules_list = []
+    for schedule in Schedule.select().where(Schedule.trip.in_(trips)):
+        schedules_list.append(schedule.__data__)
+    return {"shapes": schedules_list}
