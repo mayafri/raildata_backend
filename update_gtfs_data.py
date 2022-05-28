@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import csv, requests, zipfile
-import sched
 from io import BytesIO
 from models import *
 
