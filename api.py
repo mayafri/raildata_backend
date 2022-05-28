@@ -64,14 +64,6 @@ async def get_trips_for_train(trains_list):
         trips_ids_list.append(trip.id)
     return trips_ids_list
 
-@app.get("/shapes/{trains}")
-async def shapes_by_train(trains: str):
-    trips = await get_trips_for_train(trains.split(','))
-    shapes_list = []
-    for shape in Shape.select().where(Shape.trip.in_(trips)):
-        shapes_list.append(shape.__data__)
-    return {"shapes": shapes_list}
-
 @app.get("/schedules/{trains}")
 async def schedules_by_train(trains: str):
     trips = await get_trips_for_train(trains.split(','))

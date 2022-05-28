@@ -31,11 +31,6 @@ class Time(BaseModel):
     minutes_late = IntegerField()
     scheduled_time_utc = DateTimeField()
 
-class Shape(BaseModel):
-    trip = ForeignKeyField(Trip)
-    lat = CharField()
-    lon = CharField()
-
 class Schedule(BaseModel):
     trip = ForeignKeyField(Trip)
     arrival_time = TimeField()

@@ -15,8 +15,8 @@ db = SqliteDatabase('viarail.sqlite')
 print('Drop old data')
 
 db.connect()
-db.drop_tables([Stop, Route, Trip, Shape, Schedule])
-db.create_tables([Stop, Route, Trip, Shape, Schedule])
+db.drop_tables([Stop, Route, Trip, Schedule])
+db.create_tables([Stop, Route, Trip, Schedule])
 
 # Stations
 
