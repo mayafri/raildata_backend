@@ -78,4 +78,4 @@ async def schedules_by_train(trains: str):
     schedules_list = []
     for schedule in Schedule.select().where(Schedule.trip.in_(trips)):
         schedules_list.append(schedule.__data__)
-    return {"shapes": schedules_list}
+    return {"schedules": schedules_list}
