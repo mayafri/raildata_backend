@@ -60,19 +60,6 @@ with open('gtfs/trips.txt') as trips_file:
         train = trip[4]
         Trip.create(route=route, id=id, train=train)
 
-# Shapes (tracés) (avec Via Rail "shape_id" == "trip_id")
-
-print('Insert shapes')
-
-with open('gtfs/shapes.txt') as shapes_file:
-    csv_reader = csv.reader(shapes_file, delimiter=',')
-    next(csv_reader)
-    for shape in csv_reader:
-        trip = shape[0]
-        lat = shape[1]
-        lon = shape[2]
-        Shape.create(trip=trip, lat=lat, lon=lon)
-
 # Schedules (horaires théoriques)
 
 print('Insert schedules')
