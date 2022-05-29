@@ -11,6 +11,8 @@ Informations officielles ici : https://www.viarail.ca/fr/ressources-developpeurs
 
 ## get_trains_times.py
 
+_Désormais géré automatiquement depuis l'API, mise à jour chaque 10 min, pas besoin de cron._
+
 Récupère les horaires et les minutes de retard des trains de la journée à chaque gare depuis l'API destinée aux informations voyageur en temps réel et les ajoute au fichier de base de données. Les trains arrivés peuvent être retirés de l'API au bout de quelques heures, il vaut mieux exécuter ce script une fois par heure pour être tranquille.
 
 Source des données ici : https://tsimobile.viarail.ca/index-fr.html

@@ -1,6 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models import *
+from fastapi_utils.tasks import repeat_every
+from get_trains_times import get_trains_times
+import logging
 
 app = FastAPI()
 
@@ -13,6 +16,12 @@ app.add_middleware(
 )
 
 db.connect()
+
+logger = logging.getLogger(__name__)
+@app.on_event("startup")
+@repeat_every(seconds=600, logger=logger, wait_first=True)
+def periodic():
+    get_trains_times(db)
 
 @app.get("/routes/")
 async def trains_routes():
