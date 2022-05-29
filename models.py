@@ -1,6 +1,10 @@
 from peewee import *
+from dotenv import load_dotenv
+import os
 
-db = SqliteDatabase('viarail.sqlite')
+load_dotenv()
+
+db = SqliteDatabase(os.getenv('workdir') + '/viarail.sqlite')
 
 class BaseModel(Model):
     class Meta:
