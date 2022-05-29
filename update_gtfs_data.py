@@ -1,16 +1,13 @@
 #!/usr/bin/env python
-import csv, requests, zipfile, os
+import csv, requests, zipfile
 from io import BytesIO
-from dotenv import load_dotenv
 from models import *
-
-load_dotenv()
 
 print('Download GTFS zip file from Via Rail')
 
 r = requests.get('https://www.viarail.ca/sites/all/files/gtfs/viarail.zip')
 z = zipfile.ZipFile(BytesIO(r.content))
-z.extractall(os.getenv('workdir') + '/gtfs/')
+z.extractall('gtfs/')
 
 print('Drop old data')
 
@@ -22,7 +19,7 @@ db.create_tables([Stop, Route, Trip, Schedule])
 
 print('Insert stops')
 
-with open(os.getenv('workdir') + '/gtfs/stops.txt') as stops_file:
+with open('gtfs/stops.txt') as stops_file:
     csv_reader = csv.reader(stops_file, delimiter=',')
     next(csv_reader)
     for stop in csv_reader:
@@ -38,7 +35,7 @@ with open(os.getenv('workdir') + '/gtfs/stops.txt') as stops_file:
 
 print('Insert routes')
 
-with open(os.getenv('workdir') + '/gtfs/routes.txt') as routes_file:
+with open('gtfs/routes.txt') as routes_file:
     csv_reader = csv.reader(routes_file, delimiter=',')
     next(csv_reader)
     for route in csv_reader:
@@ -52,7 +49,7 @@ with open(os.getenv('workdir') + '/gtfs/routes.txt') as routes_file:
 
 print('Insert trips')
 
-with open(os.getenv('workdir') + '/gtfs/trips.txt') as trips_file:
+with open('gtfs/trips.txt') as trips_file:
     csv_reader = csv.reader(trips_file, delimiter=',')
     next(csv_reader)
     for trip in csv_reader:
@@ -65,7 +62,7 @@ with open(os.getenv('workdir') + '/gtfs/trips.txt') as trips_file:
 
 print('Insert schedules')
 
-with open(os.getenv('workdir') + '/gtfs/stop_times.txt') as schedules_file:
+with open('gtfs/stop_times.txt') as schedules_file:
     csv_reader = csv.reader(schedules_file, delimiter=',')
     next(csv_reader)
     for schedule in csv_reader:
