@@ -3,13 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import *
 from fastapi_utils.tasks import repeat_every
 from get_trains_times import get_trains_times
-import logging
+import logging, os
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[os.getenv('allow_origins')],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
