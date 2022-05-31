@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-import csv, requests, zipfile
+#!/usr/bin/env python3
+import csv, requests, zipfile, shutil
 from io import BytesIO
 from models import *
 
@@ -76,5 +76,7 @@ with open('gtfs/stop_times.txt') as schedules_file:
                         departure_time=departure_time,
                         stop=stop,
                         sequence=sequence)
+
+shutil.rmtree('gtfs/')
         
 print('Done')
