@@ -1,9 +1,12 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models import *
 from fastapi_utils.tasks import repeat_every
 from get_trains_times import get_trains_times
 import logging, os
+
+load_dotenv()
 
 app = FastAPI()
 
