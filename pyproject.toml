@@ -11,9 +11,9 @@ requests = "^2.27.1"
 peewee = "^3.14.10"
 uvicorn = "^0.17.6"
 fastapi-utils = "^0.2.1"
-python-dotenv = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
+python-dotenv = "^0.20.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

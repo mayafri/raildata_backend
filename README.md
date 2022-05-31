@@ -1,18 +1,30 @@
-# Scripts à exécuter en tâche planifiée (cron)
+# RailData Backend
 
-Les scripts suivants servent à alimenter un fichier de base de données SQLite. Si le fichier n'existe pas il sera créé sous le nom `viarail.sqlite`.
+## Configuration
 
-## update_gtfs_data.py
+Il faut spécifier la variable d'environnement `allow_origins` avec le domaine du client frontend
+qui sera autorisé à faire des requêtes. Dans un environnement de développement, on peut faire un
+fichier `.env` avec la valeur `allow_origins="*"`.
 
-Récupère les informations statiques depuis les données ouverts GTFS de Via Rail et met à jour le fichier de base de données.
-À planifier de temps en temps ou à exécuter manuellement au gré des besoins.
+Un dossier `static` est nécessaire, ça peut être un montage vers un volume statique ou simplement
+un dossier vide pour le développement : il contiendra le fichier `viarail.sqlite` qui sera
+automatiquement construit si vide.
 
-Informations officielles ici : https://www.viarail.ca/fr/ressources-developpeurs
+## Installation
 
-## get_trains_times.py
+Faire `poetry install` pour installer les dépendances.
 
-_Désormais géré automatiquement depuis l'API, mise à jour chaque 10 min, pas besoin de cron._
+## Lancement
 
-Récupère les horaires et les minutes de retard des trains de la journée à chaque gare depuis l'API destinée aux informations voyageur en temps réel et les ajoute au fichier de base de données. Les trains arrivés peuvent être retirés de l'API au bout de quelques heures, il vaut mieux exécuter ce script une fois par heure pour être tranquille.
+Pour lancer le serveur : `poetry run uvicorn api:app --reload` (la dernière option est
+pour le développement, pour recharger le serveur automatiquement lors d'une modification du code).
 
-Source des données ici : https://tsimobile.viarail.ca/index-fr.html
+## Mise à jour des données GTFS
+
+Le script `update_gtfs_data.py` est à exécuter manuellement pour cela :
+`poetry run ./update_gtfs_data.py`
+
+## Sources des données
+
+- Données en temps réel : https://tsimobile.viarail.ca/index-fr.html
+- Données GTFS : https://www.viarail.ca/fr/ressources-developpeurs

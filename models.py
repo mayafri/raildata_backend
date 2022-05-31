@@ -1,6 +1,6 @@
 from peewee import *
 
-db = SqliteDatabase('viarail.sqlite')
+db = SqliteDatabase('static/viarail.sqlite')
 
 class BaseModel(Model):
     class Meta:
