@@ -12,12 +12,14 @@ automatiquement construit si vide.
 
 ## Développement en local sans Docker
 
+- Cloner le dépot et rentrer dedans
 - Faire `poetry install` pour installer les dépendances.
 - Pour lancer le serveur : `poetry run uvicorn api:app --reload` (la dernière option est
   pour le développement, pour recharger le serveur automatiquement lors d'une modification du code).
 
 ## Avec Docker
 
+- Cloner le dépot et rentrer dedans
 - Construire l'image : `docker build -t hyakosm/raildata-backend .`
 - Démarrer le container (par exemple en local sur le port 8000) : `docker run -p 8000:8000 -e allow_origins='*' -d --rm hyakosm/raildata-backend`
 
