@@ -24,8 +24,14 @@ vide.
 
 -   Cloner le dépot et rentrer dedans
 -   Construire l'image : `docker build -t hyakosm/raildata-backend .`
--   Démarrer le container (par exemple en local sur le port 8000) :
-    `docker run -p 8000:8000 -e allow_origins='*' -d --rm hyakosm/raildata-backend`
+-   Démarrer le container par exemple en local sur le port 8000 (adapter le
+    répertoire source du volume) :
+
+```bash
+docker run -p 8000:8000 -e allow_origins='*' -d --rm \
+-v ~/workspace/raildata_static:/raildata_static \
+hyakosm/raildata-backend
+```
 
 ## Mise à jour des données GTFS
 
