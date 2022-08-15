@@ -9,4 +9,4 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - allow_origins="https://raildata.ca"
+      - ALLOW_ORIGINS="https://raildata.ca"
