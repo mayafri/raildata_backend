@@ -1,12 +1,12 @@
 version: "3.9"
 services:
-  api:
+  web:
     build: .
     restart: unless-stopped
     command: poetry run uvicorn api:app --host 0.0.0.0 --port 8000
     volumes:
       - ~/raildata_static:/raildata_static
-    posts:
+    ports:
       - "8000:8000"
     environment:
       - allow_origins='https://raildata.ca'
