@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     command: poetry run uvicorn api:app --host 0.0.0.0 --port 8000
     volumes:
-      - ~/raildata_static:/raildata_static
+      - ~/docker_data/raildata_static:/raildata_static
     ports:
       - "8000:8000"
     environment:
