@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.7"
 services:
   web:
     build: .
@@ -9,4 +9,4 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - allow_origins='https://raildata.ca'
+      - allow_origins=https://raildata.ca
